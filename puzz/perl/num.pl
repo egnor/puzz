@@ -1,0 +1,27 @@
+#!/usr/bin/perl 
+
+$A[0] = "ARJEOXBNKIJHUNOFVUCBRYTLCP";
+$A[1] = "PATENYFQDPKWARKCAODRMUQBOB";
+$A[2] = "KFZLXNXUMTPCPGTURTRMXNXGMP";
+$A[3] = "RBZIHTBPUJQDWTLNPCZLSAMAHV";
+$A[4] = "JLFIWGJSWLCPNIAZUAXGIJILDJ";
+$A[5] = "NDDYTNWOHTURABOBLRXDFMFTHS";
+$A[6] = "DAWMEFQEIAEVLRJYEOKTLJVRMK";
+$A[7] = "QEMAERTZNQJTRZUQDQODBAQCIJ";
+$A[8] = "ACANJODJBLGXAQDDWGRNEYBHVT";
+$A[9] = "ACPJWJCIJEMHETXPQBOTQRNOWW";
+$A[10] = "COKMQOWVUTUYLQCNOHTYIQDSEV";
+$A[11] = "HVFIVHTJGFWMCNNJTJTTCRLGOC";
+
+while (<STDIN>) {
+  chomp;
+  $st = uc $_;
+  @let = split '', $st;
+  foreach $num (0..11) {
+    foreach $ll (@let) {
+      $val = ord ($ll) - ord ('A');
+      print substr $A[$num], $val, 1;
+    }
+    print "\n";
+  }
+}
