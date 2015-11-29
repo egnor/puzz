@@ -35,32 +35,47 @@ def all(items):
   [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
 
   >>> [p for p in all("ZP")]
-  [['Z', 'P'], ['P', 'Z']]
+  ['ZP', 'PZ']
   """
 
-  if not items:
-    yield []
+  if len(items) <= 1:
+    yield items
     return
   for i in range(len(items)):
     for l in all(items[:i] + items[i+1:]):
-      yield [items[i]] + l
+      yield items[i:i+1] + l
 
 
-def list(items):
+def unique(items):
   """
-  Convenience function to return a list of the permutations of a sequence:
-  list(x) is the same as [p for p in all(x)].
+  Return a generator which yields unique permutations of a sequence
+  (even if the input has duplicates).
 
-  >>> list([1,2,3])
-  [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
+  >>> [p for p in unique((1,2,1))]
+  [(1, 2, 1), (1, 1, 2), (2, 1, 1)]
+
+  >>> set(unique("BANANA")) == set(all("BANANA"))
+  True
+
+  >>> len([p for p in unique("BANANA")]) * 12 == len([p for p in all("BANANA")])
+  True
   """
-  return [p for p in all(items)]
+
+  if len(items) <= 1:
+    yield items
+    return
+  used = set()
+  for i in range(len(items)):
+    if items[i] not in used:
+      for l in unique(items[:i] + items[i+1:]):
+        yield items[i:i+1] + l
+      used.add(items[i])
 
 
 def get(items, n):
   """
   Return the n-th permutation of a sequence.
-  Equivalent to list(items)[n], but much faster.
+  Equivalent to list(all(items))[n], but much faster.
 
   >>> get([1,2,3], 0)
   [1, 2, 3]
@@ -68,17 +83,14 @@ def get(items, n):
   >>> get([1,2,3], 1)
   [1, 3, 2]
 
-  >>> [get("HELLO", i) for i in range(count(5))] == list("HELLO")
+  >>> [get("HELLO", i) for i in range(count(5))] == list(all("HELLO"))
   True
   """
 
-  if not items: return []
+  if not items: return items[:0]
   c = count(len(items) - 1)
   i = n / c
-  return [items[i]] + get(items[:i] + items[i+1:], n % c)
-
-
-# TODO: Unique permutations (not swapping duplicates)
+  return items[i:i+1] + get(items[:i] + items[i+1:], n % c)
 
 
 if __name__ == "__main__":
