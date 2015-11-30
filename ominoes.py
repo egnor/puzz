@@ -92,6 +92,7 @@ pentominoes = [
 ]
 
 # Names from: http://www.gamepuzzles.com/sxnames.htm
+# Note that their 'Short S' is just a flip of 'Short N' (so not included).
 # See also: http://puzzler.sf.net/docs/polyominoes-intro.html#hexominoes
 hexominoes = [
   Omino('A', '###', '##', '#'),
