@@ -140,6 +140,7 @@ def reload_default(data_dir=None):
       data_dir, _ = os.path.split(inspect.getsourcefile(lambda: None))
       data_dir = os.path.join(data_dir, "data")
 
+  del all[:]
   lookup.clear()
   for file, loader in [
       ("american.txt", load_text),
@@ -153,6 +154,7 @@ def reload_default(data_dir=None):
       print >>sys.stderr, ">> Loading %s..." % path
       loader(path)
 
+  all.sort()
   print >>sys.stderr, ">> Dictionaries loaded."
 
 
