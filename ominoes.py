@@ -17,6 +17,8 @@ class Omino(collections.namedtuple('Omino',
 
   # TODO: Add ability to transform (reflect, rotate) and track transformations.
 
+  # TODO: Add aliases in addition to primary name, for different schemes?
+
   def __new__(cls, name, *lines):
     lines = [[not ch.isspace() for ch in line] for line in lines]
     cells = set([
@@ -54,6 +56,17 @@ class Omino(collections.namedtuple('Omino',
         for y in range(ys)])
 
 
+monomino = Omino('Monomino', '#')
+
+domino = Omino('Domino', '#', '#')
+
+# Names from: https://en.wikipedia.org/wiki/Tromino
+trominoes = [
+  Omino('I', '#', '#', '#'),
+  Omino('L', '#', '##'),
+]
+
+# Names from: https://en.wikipedia.org/wiki/Tetromino
 tetrominoes = [
   Omino('I', '#', '#', '#', '#'),
   Omino('L', '#', '#', '##'),
@@ -62,6 +75,8 @@ tetrominoes = [
   Omino('Z', '##', ' ##'),
 ]
 
+# Names from: https://en.wikipedia.org/wiki/Pentomino
+# Using standard names, *not* Conway's notation.
 pentominoes = [
   Omino('F', ' ##', '##', ' #'),
   Omino('I', '#', '#', '#', '#', '#'),
@@ -76,6 +91,8 @@ pentominoes = [
   Omino('Z', '##', ' #', ' ##'),
 ]
 
+# Names from: http://www.gamepuzzles.com/sxnames.htm
+# See also: http://puzzler.sf.net/docs/polyominoes-intro.html#hexominoes
 hexominoes = [
   Omino('A', '###', '##', '#'),
   Omino('C', '##', '#', '#', '##'),
@@ -114,7 +131,6 @@ hexominoes = [
   Omino('Low 4', '#', '#', '###', ' #'),
 ]
 
-by_size_name = {
-  (len(omino), omino.name): omino
-  for omino in tetrominoes + pentominoes + hexominoes
-}
+all = [monomino, domino] + trominoes + tetrominoes + pentominoes + hexominoes
+
+by_size_name = {(len(omino), omino.name): omino for omino in all}
