@@ -15,6 +15,8 @@ class Omino(collections.namedtuple('Omino',
     symmetries: Set of symmetries, out of '|', '-', '+', '/', '\', '@'.
   """
 
+  # TODO: Add doctest examples.
+
   # TODO: Add ability to transform (reflect, rotate) and track transformations.
 
   # TODO: Add aliases in addition to primary name, for different schemes?
