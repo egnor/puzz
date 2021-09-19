@@ -111,10 +111,10 @@ def load_mobypron(filename):
   """
   Loads the Moby Pronunciator data set, containing phonemic data.
   """
-  for line in open(filename):
+  for line in open(filename, encoding="mac-roman"):
     word, pron = line.strip().split(None, 1)
     word = word.replace("_", " ")
-    pron = pron.translate(None, "[/',] ")
+    pron = pron.translate({ch: None for ch in "[/',] "})
     add(word, filename).phonemes = pron
 
 
