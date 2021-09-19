@@ -75,7 +75,7 @@ class GeneralizedWordSearch(object):
 
   def find(self, what=None):
     if what is None:
-      import words
+      from . import words
       what = words.all
     elif isinstance(what, str):
       return self.find_one(what)
@@ -101,7 +101,7 @@ class GeneralizedWordSearch(object):
       for p in paths:
         used = set(p[::2])
         self.find_recur(prefix, list(p), used, word)
-    except Done, e:
+    except Done as e:
       return e.path
 
     return None
@@ -132,11 +132,11 @@ class GeneralizedWordSearch(object):
 
   def show(self, highlight=None):
     if not highlight:
-      print
-      print "  " + "\n  ".join(self.grid)
-      print
+      print()
+      print("  " + "\n  ".join(self.grid))
+      print()
     else:
-      print 
+      print() 
       for j, row in enumerate(self.grid):
         out = []
         for i, k in enumerate(row):
@@ -144,8 +144,8 @@ class GeneralizedWordSearch(object):
             out.append(HIGHLIGHT_ON + k + HIGHLIGHT_OFF)
           else:
             out.append(k)
-        print "  " + "".join(out)
-      print
+        print("  " + "".join(out))
+      print()
       
 
 class WordSearch(GeneralizedWordSearch):
@@ -159,60 +159,60 @@ class Boggle(GeneralizedWordSearch):
     
 if __name__ == '__main__':
   if len(sys.argv) < 2:
-    print """
+    print("""
     Usage: %s <inputfile>
 
  inputfile contains a letter grid.  All blank lines are ignored.
  Letters should be in the same case as the dictionary (the standard
  puzz dictionaries are lowercase).
- """
+ """)
     sys.exit(2)
 
-  import words
+  from . import words
 
   grid = read_lettergrid_file(sys.argv[1])
   if "boggle" in sys.argv[0]:
     w = Boggle(grid)
   else:
     w = WordSearch(grid)
-  print 
-  print "  searching grid for %d words..." % (len(words.all),)
+  print() 
+  print("  searching grid for %d words..." % (len(words.all),))
   all = w.find(words.all)
-  all = all.keys()
+  all = list(all.keys())
   all.sort()
-  print "  %d words from dictionary found" % (len(all),)
+  print("  %d words from dictionary found" % (len(all),))
   reduced = words.remove_substrings(all)
   reduced.sort()
-  print "  (%d words after removing substrings)" % (len(reduced),)
-  print
-  print "  interactive mode:  enter '?' for help"
-  print
+  print("  (%d words after removing substrings)" % (len(reduced),))
+  print()
+  print("  interactive mode:  enter '?' for help")
+  print()
 
   while True:
     try:
-      i = raw_input("> ").strip()
+      i = input("> ").strip()
     except EOFError:
       break
     if not i: break
     if i == "?":
-      print """
+      print("""
       ?  print this help message
       *  print all dictionary words found
       /  print all dictionary words found (suppress substrings)
       &  print grid
-      """
+      """)
       continue
     if i == "*":
       x = [i for i in all if len(i)>6]
       words.print_compact_list(x)
-      print len(x)
-      print
+      print(len(x))
+      print()
       continue
     if i == "/":
       x = [i for i in reduced if len(i)>6]
       words.print_compact_list(x)
-      print len(x)
-      print
+      print(len(x))
+      print()
       continue
     if i == "&":
       w.show()
@@ -220,6 +220,6 @@ if __name__ == '__main__':
     
     p = w.find(i)
     if not p:
-      print "\n  not found\n"
+      print("\n  not found\n")
     else:
       w.show(highlight=p[::2])

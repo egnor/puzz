@@ -151,11 +151,11 @@ def reload_default(data_dir=None):
     ]:
     path = os.path.join(data_dir, file)
     if os.path.exists(path):
-      print >>sys.stderr, ">> Loading %s..." % path
+      print(">> Loading %s..." % path, file=sys.stderr)
       loader(path)
 
   all.sort()
-  print >>sys.stderr, ">> Dictionaries loaded."
+  print(">> Dictionaries loaded.", file=sys.stderr)
 
 
 def get_terminal_width():
@@ -181,7 +181,7 @@ def print_compact_list(words, width=None, out=sys.stdout):
   rows = (len(words)+cols-1) / cols
   fmt = "  %%-%ds" % (maxwidth,)
   for i in range(0, rows):
-    print >> out, "".join(fmt % j for j in words[i::rows])
+    print("".join(fmt % j for j in words[i::rows]), file=out)
 
 
 if __name__ == "__main__":

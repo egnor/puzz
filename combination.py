@@ -37,7 +37,7 @@ def choose(items, k):
   
   n = len(items)
   if n < k:
-    raise ValueError, "can't choose %d of %d items" % (k, n)
+    raise ValueError("can't choose %d of %d items" % (k, n))
   if k == 0:
     yield items[:0]
   elif len(items) == k:

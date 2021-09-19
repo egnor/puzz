@@ -2,10 +2,10 @@ by_sorted = {}
 
 def init(wordlist=None):
   if wordlist is None:
-    import words
+    from . import words
     wordlist = words.all
 
-  print "constructing anagram index for %d words..." % (len(wordlist),)
+  print("constructing anagram index for %d words..." % (len(wordlist),))
   for i in wordlist:
     s = "".join(sorted(i))
     by_sorted.setdefault(s, []).append(i)
@@ -32,9 +32,9 @@ def is_subset_sorted(big, small):
   b_iter = iter(big)
   for s in small:
     try:
-      b = b_iter.next()
+      b = next(b_iter)
       while b < s:
-        b = b_iter.next()
+        b = next(b_iter)
       if s != b:
         return False
     except StopIteration:
@@ -47,7 +47,7 @@ def sort(w):
 def candidates(letters):
   letters = sort(letters)
   out = []
-  for k, v in by_sorted.iteritems():
+  for k, v in by_sorted.items():
     if is_subset_sorted(letters, k):
       for i in v:
         out.append((len(i), i))

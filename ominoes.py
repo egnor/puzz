@@ -61,9 +61,9 @@ class Omino(collections.namedtuple(
     non-space character.  The character becomes the polyomino's name."""
     d = cells_from_string(picture)
     bn = {}
-    for p, k in d.iteritems():
+    for p, k in d.items():
       bn.setdefault(k, []).append(p)
-    for name, cells in bn.iteritems():
+    for name, cells in bn.items():
       Omino(name, cells)
 
   # List of all Omino objects
@@ -210,8 +210,8 @@ zz    Z   $$$  4
 # Verify some expected facts about the number of free and fixed 5- and
 # 6-ominoes.
 assert len(Omino.BY_SIZE[6]) == 35
-assert sum(len(o.aspects) for o in Omino.BY_SIZE[6].itervalues()) == 216
+assert sum(len(o.aspects) for o in Omino.BY_SIZE[6].values()) == 216
 assert len(Omino.BY_SIZE[5]) == 12
-assert sum(len(o.aspects) for o in Omino.BY_SIZE[5].itervalues()) == 63
+assert sum(len(o.aspects) for o in Omino.BY_SIZE[5].values()) == 63
 
 __all__ = ("Omino", "cells_from_string")

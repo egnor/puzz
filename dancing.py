@@ -223,7 +223,7 @@ class Matrix(object):
   def DumpColumns(self):
     """Print the name and size of all columns in the matrix."""
     for c in self.h.iterright():
-      print(c.name, c.size)
+      print((c.name, c.size))
 
   def _Recur(self, solution, k):
     if self.h.r == self.h:

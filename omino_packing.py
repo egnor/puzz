@@ -2,13 +2,13 @@
 
 # This is mostly meant as sample code for doing omino packing.
 
-import dancing
-from ominoes import *
+from . import dancing
+from .ominoes import *
 
 def show_table(table, os):
   out = []
 
-  for (i, j), k in table.iteritems():
+  for (i, j), k in table.items():
     while len(out) < j+1: out.append([])
     while len(out[j]) < i+1: out[j].append(' ')
     out[j][i] = k
@@ -19,7 +19,7 @@ def show_table(table, os):
       out[j+cj][i+ci] = o.name
 
   for row in out:
-    print "".join(row)
+    print("".join(row))
 
 
 # A classic pentomino problem:  select any pentomino.  Remove it from
@@ -40,7 +40,7 @@ SHAPE = """
 """
 
 # We can use all the pentominoes except the F itself.
-ELIGIBLE = [o for o in Omino.BY_SIZE[5].itervalues() if o.name != 'F']
+ELIGIBLE = [o for o in Omino.BY_SIZE[5].values() if o.name != 'F']
 
 table = cells_from_string(SHAPE)
 
@@ -76,5 +76,5 @@ solutions = 0
 for x in D.Solve():
   show_table(table, x)
   solutions += 1
-print
-print "%d solutions found." % (solutions,)
+print()
+print("%d solutions found." % (solutions,))

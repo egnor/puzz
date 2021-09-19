@@ -52,7 +52,7 @@ class UselessGuess(ValueError):
   pass
 
 def read_nonogram_file(f):
-  print >> sys.stderr, "reading nonogram input from %s..." % (f,)
+  print("reading nonogram input from %s..." % (f,), file=sys.stderr)
   if isinstance(f, str):
     f = open(f)
   state = 0
@@ -66,13 +66,13 @@ def read_nonogram_file(f):
         state = 2
         curr = cols
       elif state == 3:
-        print "read %d rows and %d columns" % (len(rows), len(cols))
+        print("read %d rows and %d columns" % (len(rows), len(cols)))
         return rows, cols
     else:
       state = (state/2)*2 + 1
       curr.append([int(i) for i in re.split(r"[ ,-]+", line)])
 
-  print >> sys.stderr, "read %d rows and %d columns" % (len(rows), len(cols))
+  print("read %d rows and %d columns" % (len(rows), len(cols)), file=sys.stderr)
   return rows, cols
           
 
@@ -129,8 +129,8 @@ class Line(object):
       return 0
     start_possible_size = len(possible)
     if self.verbose:
-      print "possible set: ", possible
-      print " start state: ", self.s
+      print("possible set: ", possible)
+      print(" start state: ", self.s)
     values = None
     count = 0
     for s in self.find_solutions():
@@ -140,7 +140,7 @@ class Line(object):
         return 0
       
       if self.verbose:
-        print s
+        print(s)
       if not values:
         values = dict((i, s[i]) for i in possible)
       else:
@@ -155,7 +155,7 @@ class Line(object):
       raise NoSolution("no solutions starting with " + self.s)
 
     if self.verbose:
-      print "forced positions:", ["%d=%s" % (i, values[i]) for i in possible]
+      print("forced positions:", ["%d=%s" % (i, values[i]) for i in possible])
     s = list(self.s)
     for i in possible:
       if self.parent:
@@ -318,26 +318,26 @@ class Nonogram(object):
 
   def dump(self):
     for r in self.R:
-      print r, "  ", ",".join([str(i) for i in r.values])
+      print(r, "  ", ",".join([str(i) for i in r.values]))
 
   def show(self, off=OFF, on=ON, unknown=UNKNOWN):
-    print
+    print()
     m = {OFF: off, ON: on, UNKNOWN: unknown}
     for r in self.R:
       rp = "".join(m[i] for i in r.s)
-      print "   ", rp, "  ", " ".join(str(i) for i in r.values)
-    print
+      print("   ", rp, "  ", " ".join(str(i) for i in r.values))
+    print()
       
 
 if __name__ == '__main__':
   if len(sys.argv) < 2:
-    print """
+    print("""
     Usage: %s <inputfile>
 
  inputfile contains rows top-to-bottom, a blank line, then columns
  left-to-right.  Values in a line can be separated by spaces, commas,
  or hyphens.
- """
+ """)
     sys.exit(2)
  
   f = sys.argv[1]
